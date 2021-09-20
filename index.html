@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Басеги - природный заповедник</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<link rel="icon" href="favicon.png" type="image/png">
+		<link rel="stylesheet" href="css/font-awesome.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script>
+			function showContent(link) {
+
+				var cont = document.getElementById('content');
+				var loading = '<div style="display: flex; font-size: 18px"><div><i class="fa fa-pulse fa-spinner" aria-hidden="true"></i></div>Идет загрузка</div>';
+
+				cont.innerHTML = loading;
+
+				var http = createRequestObject();					// создаем ajax-объект
+				if( http ) {
+					http.open('get', link);							// инициируем загрузку страницы
+					http.onreadystatechange = function () {			// назначаем асинхронный обработчик события
+						if(http.readyState == 4) {
+							cont.innerHTML = http.responseText;		// присваиваем содержимое
+						}
+					}
+					http.send(null);    
+				} else {
+					document.location = link;	// если ajax-объект не удается создать, просто перенаправляем на адрес
+				}
+			}
+
+			// создание ajax объекта
+			function createRequestObject() {
+				try { return new XMLHttpRequest() }
+				catch(e) {
+					try { return new ActiveXObject('Msxml2.XMLHTTP') }
+					catch(e) {
+						try { return new ActiveXObject('Microsoft.XMLHTTP') }
+						catch(e) { return null; }
+					}
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<img class="bg_body" src='img/bg/6.jpg'>
+		<header>
+			<div class="wrapper">
+				<div class="header">
+					<nav class="menu_pk">
+						<a class="nav_a" onclick="showContent('glav.html')"><i class="fa fa-home" aria-hidden="true"></i>Главная</a>
+						<a class="nav_a" onclick="showContent('map.html')"><i class="fa fa-map-signs" aria-hidden="true"></i>Маршруты</a>
+						<a class="nav_a" onclick="showContent('me.html')"><i class="fa fa-life-ring" aria-hidden="true"></i>О нас</a>
+					</nav>
+					<a class="call_a menu_pk" onclick="showContent('call.html')"><i style="margin-left: 3px;" class="fa fa-phone" aria-hidden="true"></i>Связь с нами</a>
+					<div class="menu_mb">
+					<a class="menu-triger a_nav_menu" href="#">Меню</a>
+					<div class="menu-popup">
+						<a class="menu-close" href="#"></a>
+						<ul class="ul">
+							<a class="menu_mb_a" href="#" onclick="showContent('glav.html')"><i class="fa fa-home" aria-hidden="true"></i>Главная</a>
+							<a class="menu_mb_a" href="#" onclick="showContent('map.html')"><i class="fa fa-map-signs" aria-hidden="true"></i>Маршруты</a>
+							<a class="menu_mb_a" href="#" onclick="showContent('me.html')"><i class="fa fa-life-ring" aria-hidden="true"></i>О нас</a><br/>
+							<a class="menu_mb_a" href="#" onclick="showContent('call.html')"><i class="fa fa-phone" aria-hidden="true"></i>Связь с нами</a>
+						</ul>						
+					</div>
+				</div>
+				</div>
+			</div>
+		</header>
+		<content id="content">
+			<div class="wrapper">
+				<div class="content">
+					<div class="content_info">
+						<h1><span style="color: #ffa600"><i class="fa fa-tree" aria-hidden="true"></i>Басеги</span> - природный<br/>заповедник</h1>
+						<p class="content_info_p">Обширная природоохранная территория в Пермском крае,<br/>расположенная в районе красивого горного хребта Басеги.</p>
+						<a class="content_info_a" onclick="showContent('me.html')">Подробнее...</a>
+					</div>
+				</div>
+			</div>
+		</content>
+		<script type="text/javascript">
+			$(function() {
+				var $menu_popup = $('.menu-popup');
+					
+				$(".menu-triger, .menu-close").click(function(){
+					$menu_popup.slideToggle(300, function(){
+						if ($menu_popup.is(':hidden')) {
+							$('body').removeClass('body_pointer');
+						} else {
+							$('body').addClass('body_pointer');
+						}					
+					});  
+					return false;
+				});			
+					
+				$(document).on('click', function(e){
+					if (!$(e.target).closest('.menu_mb').length){
+						$('body').removeClass('body_pointer');
+						$menu_popup.slideUp(300);
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
