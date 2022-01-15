@@ -16,21 +16,19 @@
 
 				cont.innerHTML = loading;
 
-				var http = createRequestObject();					// создаем ajax-объект
+				var http = createRequestObject();
 				if( http ) {
-					http.open('get', link);							// инициируем загрузку страницы
-					http.onreadystatechange = function () {			// назначаем асинхронный обработчик события
+					http.open('get', link);				
+					http.onreadystatechange = function () {		
 						if(http.readyState == 4) {
-							cont.innerHTML = http.responseText;		// присваиваем содержимое
+							cont.innerHTML = http.responseText;
 						}
 					}
 					http.send(null);    
 				} else {
-					document.location = link;	// если ajax-объект не удается создать, просто перенаправляем на адрес
+					document.location = link;
 				}
 			}
-
-			// создание ajax объекта
 			function createRequestObject() {
 				try { return new XMLHttpRequest() }
 				catch(e) {
@@ -80,28 +78,6 @@
 				</div>
 			</div>
 		</content>
-		<script type="text/javascript">
-			$(function() {
-				var $menu_popup = $('.menu-popup');
-					
-				$(".menu-triger, .menu-close").click(function(){
-					$menu_popup.slideToggle(300, function(){
-						if ($menu_popup.is(':hidden')) {
-							$('body').removeClass('body_pointer');
-						} else {
-							$('body').addClass('body_pointer');
-						}					
-					});  
-					return false;
-				});			
-					
-				$(document).on('click', function(e){
-					if (!$(e.target).closest('.menu_mb').length){
-						$('body').removeClass('body_pointer');
-						$menu_popup.slideUp(300);
-					}
-				});
-			});
-		</script>
+		
 	</body>
 </html>
